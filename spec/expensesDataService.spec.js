@@ -13,10 +13,29 @@ describe('expensesDataService', function () {
         expect(expenseItems).toContain(testExpenseItem);
     }));
 
-    it('taxi should be a reasonable expense', function () {
-        var taxi = new ExpenseItem('Taxi', 'To airport', 89.95);
 
-        expect(taxi).toBeLessThan(100);
-    });
+    describe('Reasonable expenses', function () {
+        var taxi,
+            dinner;
+
+        beforeEach(function () {
+            jasmine.addMatchers(customMatchers);
+        });
+
+        beforeEach(function () {
+            taxi = new ExpenseItem('Taxi', 'To airport', 89.95);
+            dinner = new ExpenseItem('Dinner', 'Dinner with John and Ward', 189.50);
+        });
+
+        it('taxi should be a reasonable expense', function () {
+            expect(taxi).toBeAReasonableExpense();
+        });
+
+        it('dinner should be a reasonable expense', function () {
+            expect(dinner).not.toBeAReasonableExpense();
+        });
+
+
+    })
 
 });
